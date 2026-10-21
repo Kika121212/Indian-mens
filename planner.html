@@ -1,0 +1,11 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>7-day planner · Atelier Brown</title><meta name="description" content="A seven-day outfit plan for your season and undertone, with a pack list."><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🧥%3C/text%3E%3C/svg%3E"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap"><link rel="stylesheet" href="assets/style.css"></head><body><header class="top"><nav class="snav"><a href="index.html">Atelier Brown</a><a href="advisor.html">3D Advisor</a><a href="fabrics.html">Fabrics</a><a href="planner.html" class=on>Planner</a><a href="about.html">About</a><button onclick="tgl()" aria-label="Toggle theme">Light / Dark</button></nav></header>
+<div class="page"><h1>7-day planner</h1><p class="lead">Pick your season and undertone, then choose a week style. Tap Try in 3D to see any day on the model.</p>
+<div class="card"><div class="lab">Season</div><div class="chips" id="se"></div><div class="lab">Undertone</div><div class="chips" id="un"></div></div><div id="pl"></div></div><footer>Atelier Brown · inspired by The Brown Skin Style Guide. Sizes, colour detection and fabric advice are guidance, not guarantees.</footer>
+<script src="assets/data.js"></script><script>
+const $=s=>document.querySelector(s);
+function row(id,obj,key){$(id).innerHTML=Object.entries(obj).map(([k,v])=>`<button class="chip${S[key]===k?' on':''}" data-k="${k}">${v}</button>`).join('');$(id).onclick=e=>{const k=e.target.dataset.k;if(k){S[key]=k;saveS();render()}}}
+function render(){row('#se',SE,'se');row('#un',UN,'un');$('#pl').innerHTML=plan().replace(/>Wear</g,'>Try in 3D<')}
+$('#pl').onclick=e=>{const k=e.target.closest('[data-wk]'),d=e.target.closest('[data-day]');
+ if(k){S.wk=k.dataset.wk;saveS();render()}else if(d){const[oc,al]=WK[S.wk][1][+d.dataset.day];try{localStorage.setItem('abWear',JSON.stringify({oc,alt:al}))}catch(_){}location.href='advisor.html'}};
+render();
+</script></body></html>
